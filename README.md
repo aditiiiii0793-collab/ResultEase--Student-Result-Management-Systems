@@ -47,6 +47,3 @@ To get a local copy up and running, follow these steps.
     ```
 5.  Open your browser and go to `http://localhost:8080`.
 
-## Screenshots
-
-(Add more screenshots here!)
