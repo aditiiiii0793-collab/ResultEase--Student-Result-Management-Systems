@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher Dashboard - ResultEase</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">👩‍🏫 Teacher Portal</a>
+            <div> <a href="/change-password" class="btn btn-outline-light btn-sm me-2">Change Password</a>
+                <form th:action="@{/logout}" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-light btn-sm">Logout</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Welcome, <span th:text="${teacher?.name ?: 'Teacher'}">Teacher</span>!</h1>
+        </div>
+        <h4>Your Assigned Subjects</h4>
+        <p>Click on a subject to select an assessment type.</p>
+        <div class="list-group">
+            <a th:each="subject : ${subjects}"
+               th:href="@{/teacher/subject/{id}(id=${subject.id})}"
+               class="list-group-item list-group-item-action">
+                <strong th:text="${subject.name}">Physics</strong>
+                - <span th:text="${subject.course?.name}">Class 10 A</span>
+            </a>
+             <div th:if="${#lists.isEmpty(subjects)}" class="alert alert-warning mt-3" role="alert">
+              No subjects are currently assigned to you.
+            </div>
+        </div>
+    </div>
+</body>
+</html>

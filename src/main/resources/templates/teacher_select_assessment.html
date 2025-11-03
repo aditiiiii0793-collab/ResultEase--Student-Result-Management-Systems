@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Select Assessment - ResultEase</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">👩‍🏫 Teacher Portal</a>
+             <div>
+                <a href="/change-password" class="btn btn-outline-light btn-sm me-2">Change Password</a>
+                <form th:action="@{/logout}" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-light btn-sm">Logout</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+             <div>
+                <h1 class="h2 mb-0">Select Assessment</h1>
+                <span class="text-muted">For Subject: <span th:text="${subject?.name}">Physics</span></span>
+            </div>
+            <a href="/teacher/dashboard" class="btn btn-secondary">← Back to Subjects</a>
+        </div>
+        <div class="list-group">
+            <a th:href="@{/teacher/subject/{subjectId}/assessment/ia1(subjectId=${subject?.id})}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                Internal Assessment 1 (IA-1)
+                <span class="badge bg-primary rounded-pill" th:text="'Max: ' + ${subject?.ia1MaxMarks ?: 20}">Max: 20</span>
+            </a>
+            <a th:href="@{/teacher/subject/{subjectId}/assessment/ia2(subjectId=${subject?.id})}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                Internal Assessment 2 (IA-2)
+                <span class="badge bg-primary rounded-pill" th:text="'Max: ' + ${subject?.ia2MaxMarks ?: 20}">Max: 20</span>
+            </a>
+            <a th:href="@{/teacher/subject/{subjectId}/assessment/termwork(subjectId=${subject?.id})}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                Term Work
+                <span class="badge bg-primary rounded-pill" th:text="'Max: ' + ${subject?.termWorkMaxMarks ?: 20}">Max: 20</span>
+            </a>
+            <a th:href="@{/teacher/subject/{subjectId}/assessment/finalexam(subjectId=${subject?.id})}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                Final Exam
+                <span class="badge bg-danger rounded-pill" th:text="'Max: ' + ${subject?.finalExamMaxMarks ?: 60}">Max: 60</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

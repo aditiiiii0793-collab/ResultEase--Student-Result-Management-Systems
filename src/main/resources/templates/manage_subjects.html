@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Subjects - ResultEase</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/admin/dashboard">🚀 Admin Panel</a>
+            <form th:action="@{/logout}" method="post" class="d-inline">
+                <button type="submit" class="btn btn-light btn-sm">Logout</button>
+            </form>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        <h2>Manage Subjects</h2>
+        <div th:if="${param.error}" class="alert alert-danger" role="alert" th:text="${param.error}"></div>
+        <div th:if="${success}" class="alert alert-success" role="alert" th:text="${success}"></div>
+
+        <div class="card mb-4">
+            <div class="card-header">Add New Subject</div>
+            <div class="card-body">
+                <form th:action="@{/admin/subjects/add}" th:object="${newSubject}" method="post">
+                    <div class="mb-3"><label class="form-label">Subject Name</label><input type="text" class="form-control" th:field="*{name}" required></div>
+                    <div class="mb-3">
+                        <label class="form-label">Course</label>
+                        <select class="form-select" th:field="*{course.id}" required>
+                            <option value="">Choose Course...</option>
+                            <option th:each="course : ${courseList}" th:value="${course.id}" th:text="${course.name}"></option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Assign Teacher (Optional)</label>
+                        <select class="form-select" th:field="*{teacher.id}">
+                            <option value="">No Teacher Assigned</option>
+                            <option th:each="teacher : ${teacherList}" th:value="${teacher.id}" th:text="${teacher.name}"></option>
+                        </select>
+                    </div>
+                    <hr>
+                    <h5>Set Maximum Marks for Components:</h5>
+                    <div class="row">
+                        <div class="col-md-3 mb-3"><label class="form-label">IA1 Max Marks</label><input type="number" class="form-control" th:field="*{ia1MaxMarks}" min="0" required></div>
+                        <div class="col-md-3 mb-3"><label class="form-label">IA2 Max Marks</label><input type="number" class="form-control" th:field="*{ia2MaxMarks}" min="0" required></div>
+                        <div class="col-md-3 mb-3"><label class="form-label">Term Work Max Marks</label><input type="number" class="form-control" th:field="*{termWorkMaxMarks}" min="0" required></div>
+                        <div class="col-md-3 mb-3"><label class="form-label">Final Exam Max Marks</label><input type="number" class="form-control" th:field="*{finalExamMaxMarks}" min="0" required></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Subject</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">Existing Subjects</div>
+            <div class="card-body">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th><th>Subject Name</th><th>Course</th><th>Teacher</th>
+                            <th>Max IA1</th><th>Max IA2</th><th>Max Term</th><th>Max Final</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="subject : ${subjectList}">
+                            <td th:text="${subject.id}">1</td>
+                            <td th:text="${subject.name}">Maths</td>
+                            <td th:text="${subject.course?.name}">Class 10</td>
+                            <td th:text="${subject.teacher?.name ?: 'Unassigned'}">Mr. Smith</td>
+                            <td th:text="${subject.ia1MaxMarks}">20</td>
+                            <td th:text="${subject.ia2MaxMarks}">20</td>
+                            <td th:text="${subject.termWorkMaxMarks}">20</td>
+                            <td th:text="${subject.finalExamMaxMarks}">60</td>
+                            <td>
+                                <a th:href="@{/admin/subjects/edit/{id}(id=${subject.id})}" class="btn btn-sm btn-warning">Edit</a>
+                                <a th:href="@{/admin/subjects/delete/{id}(id=${subject.id})}" class="btn btn-sm btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <a href="/admin/dashboard" class="btn btn-secondary mt-3">Back to Dashboard</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Subject - ResultEase</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/admin/dashboard">🚀 Admin Panel</a>
+            <form th:action="@{/logout}" method="post" class="d-inline">
+                <button type="submit" class="btn btn-light btn-sm">Logout</button>
+            </form>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        <h2>Edit Subject</h2>
+        <div class="card">
+            <div class="card-body">
+                <form th:action="@{/admin/subjects/update/{id}(id=${subject.id})}" th:object="${subject}" method="post">
+                    <div class="mb-3">
+                        <label for="subjectName" class="form-label">Subject Name</label>
+                        <input type="text" class="form-control" id="subjectName" th:field="*{name}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="courseSelect" class="form-label">Course</label>
+                        <select class="form-select" id="courseSelect" th:field="*{course.id}">
+                            <option th:each="course : ${courseList}" th:value="${course.id}" th:text="${course.name}"></option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="teacherSelect" class="form-label">Assign Teacher (Optional)</label>
+                        <select class="form-select" id="teacherSelect" th:field="*{teacher.id}">
+                            <option value="">No Teacher Assigned</option>
+                            <option th:each="teacher : ${teacherList}" th:value="${teacher.id}" th:text="${teacher.name}"></option>
+                        </select>
+                    </div>
+                    <hr>
+                    <h5>Set Maximum Marks for Components:</h5>
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label">IA1 Max Marks</label>
+                            <input type="number" class="form-control" th:field="*{ia1MaxMarks}" min="0" required>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label">IA2 Max Marks</label>
+                            <input type="number" class="form-control" th:field="*{ia2MaxMarks}" min="0" required>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label">Term Work Max Marks</label>
+                            <input type="number" class="form-control" th:field="*{termWorkMaxMarks}" min="0" required>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label">Final Exam Max Marks</label>
+                            <input type="number" class="form-control" th:field="*{finalExamMaxMarks}" min="0" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <a href="/admin/subjects" class="btn btn-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
