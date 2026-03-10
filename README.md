@@ -2,7 +2,7 @@
 
 A web application for managing and viewing student academic results. This project was built as part of my Semester 3 curriculum.
 
-
+[ working screenshots of the project : screenshots]
 
 ## Features
 
