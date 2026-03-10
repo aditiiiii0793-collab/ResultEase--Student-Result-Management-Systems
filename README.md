@@ -2,8 +2,7 @@
 
 A web application for managing and viewing student academic results. This project was built as part of my Semester 3 curriculum.
 
-[ working screenshots of the project : screenshots]
-
+### 📸 [View Project Screenshots](./screenshots/)
 ## Features
 
 * **Admin Panel:** Admins can securely log in to add, update, and delete student records and results.
